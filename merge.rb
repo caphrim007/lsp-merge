@@ -73,14 +73,17 @@ class LspMerge
     end
 
     def run_proper()
-        @logger.debug "Opening #{@output} file"
-        io = File.open(@output, 'w')
+        if @noop
+            @logger.debug "Noop: Opening #{@output} file for writing"
+        else
+            @logger.debug "Opening #{@output} file for writing"
+            io = File.open(@output, 'w')
 
-        io.write '<?xml version="1.0"?>'
-        io.write '<ArrayOfPattern xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+            io.write '<?xml version="1.0"?>'
+            io.write '<ArrayOfPattern xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+        end
 
         @logger.debug "Merging #{@input.length} files"
-
         @input.each do | merge |
             @logger.debug "Opening #{merge} file"
             current_io = File.open(merge)
@@ -90,25 +93,37 @@ class LspMerge
 
             @current_doc.each do | node |
                 if node.name == "Pattern" && node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
-                    io.write node.outer_xml
+                    if @noop
+                        @logger.debug 'Noop: Would have written a <Pattern> block'
+                    else
+                        io.write node.outer_xml
+                    end
                 end
             end
 
             current_io.close()
         end
 
-        io.write '</ArrayOfPattern>'
-        io.close()
+        if @noop
+            @logger.debug 'Noop: Wrapping up XML file. Closing file handlers'
+        else
+            io.write '</ArrayOfPattern>'
+            io.close()
+        end
     end
 
     def run_fast()
         in_xml = false
 
-        @logger.debug "Opening #{@output} file"
-        io = File.open(@output, 'w')
+        if @noop
+            @logger.debug "Noop: Opening #{@output} file for writing"
+        else
+            @logger.debug "Opening #{@output} file for writing"
+            io = File.open(@output, 'w')
 
-        io.write '<?xml version="1.0"?>'
-        io.write '<ArrayOfPattern xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+            io.write '<?xml version="1.0"?>'
+            io.write '<ArrayOfPattern xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">'
+        end
 
         @logger.debug "Merging #{@input.length} files"
 
@@ -121,23 +136,37 @@ class LspMerge
 
                 if line == '<Pattern>'
                     in_xml = true
+                    if @noop
+                        @logger.debug 'Noop: Entering a <Pattern> block'
+                    end
                 end
 
                 if in_xml and line == '</Pattern>'
                     in_xml = false
-                    io.write line
+
+                    if @noop
+                        @logger.debug 'Noop: Leaving a <Pattern> block'
+                    else
+                        io.write line
+                    end
                 end
 
                 if in_xml
-                    io.write line
+                    if not @noop
+                        io.write line
+                    end
                 end
             end
 
             current_io.close()
         end
 
-        io.write '</ArrayOfPattern>'
-        io.close()
+        if @noop
+            @logger.debug 'Noop: Wrapping up XML file. Closing file handlers'
+        else
+            io.write '</ArrayOfPattern>'
+            io.close()
+        end
     end
 
     def run()
