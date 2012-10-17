@@ -33,9 +33,11 @@ tarupp@catbot:~/lsp-merge$ ruby merge.rb --help
 Usage: merge.rb [options]
 
 Merge Options:
-        --input INPUT                Comma separated list of files to use as input. Files are merged in the order they are listed
+        --input INPUT                Comma separated list of files to use as input. Files are merged in the order
+                                     they are listed
         --output FILENAME            Filename to write the merged output to (default: UserPatterns.xml.new)
-        --proper                     Specify that proper XML merging be done. This can take a long time for large files (default: false)
+        --proper                     Specify that proper XML merging be done. This can take a long time for large
+                                     files (default: false)
 
 General Options:
     -h, --help                       Show this message
@@ -67,9 +69,11 @@ D, [2012-10-17T14:20:13.030680 #11500] DEBUG -- : Will write output to UserPatte
 D, [2012-10-17T14:20:13.032399 #11500] DEBUG -- : Opening UserPatterns.xml.new file
 D, [2012-10-17T14:20:13.032794 #11500] DEBUG -- : Merging 2 files
 D, [2012-10-17T14:20:13.033092 #11500] DEBUG -- : Opening xml/orig/UserPatterns.xml file
-D, [2012-10-17T14:20:13.033394 #11500] DEBUG -- : Parsing XML from xml/orig/UserPatterns.xml. This may take a while if the file is large
+D, [2012-10-17T14:20:13.033394 #11500] DEBUG -- : Parsing XML from xml/orig/UserPatterns.xml. This may take a while
+                                                  if the file is large
 D, [2012-10-17T14:53:56.513055 #11500] DEBUG -- : Opening xml/orig/merge_me.xml file
-D, [2012-10-17T14:53:56.513605 #11500] DEBUG -- : Parsing XML from xml/orig/merge_me.xml. This may take a while if the file is large
+D, [2012-10-17T14:53:56.513605 #11500] DEBUG -- : Parsing XML from xml/orig/merge_me.xml. This may take a while if
+                                                  the file is large
 Time elapsed 2030.09169897 seconds
 tarupp@catbot:~/lsp-merge$
 ```
