@@ -61,6 +61,7 @@ Clearly this can lead to malformed XML documents if a tag is missed in the parsi
 The upside to the fast parser is that it is fast. How fast?
 
 **Proper Parser**
+```
 tarupp@catbot:~/lsp-merge$ ruby merge.rb --input xml/orig/UserPatterns.xml,xml/orig/merge_me.xml 
 D, [2012-10-17T14:20:13.030680 #11500] DEBUG -- : Will write output to UserPatterns.xml.new
 D, [2012-10-17T14:20:13.032399 #11500] DEBUG -- : Opening UserPatterns.xml.new file
@@ -71,8 +72,10 @@ D, [2012-10-17T14:53:56.513055 #11500] DEBUG -- : Opening xml/orig/merge_me.xml 
 D, [2012-10-17T14:53:56.513605 #11500] DEBUG -- : Parsing XML from xml/orig/merge_me.xml. This may take a while if the file is large
 Time elapsed 2030.09169897 seconds
 tarupp@catbot:~/lsp-merge$
+```
 
 **Fast Parser**
+```
 tarupp@catbot:~/lsp-merge$ ruby merge.rb --input xml/orig/UserPatterns.xml,xml/orig/merge_me.xml
 D, [2012-10-17T15:44:18.793662 #13596] DEBUG -- : Will write output to UserPatterns.xml.new
 D, [2012-10-17T15:44:18.794298 #13596] DEBUG -- : Opening UserPatterns.xml.new file for writing
@@ -81,7 +84,7 @@ D, [2012-10-17T15:44:18.795207 #13596] DEBUG -- : Opening xml/orig/UserPatterns.
 D, [2012-10-17T15:44:42.458664 #13596] DEBUG -- : Opening xml/orig/merge_me.xml file
 Time elapsed 24.55157722 seconds
 tarupp@catbot:~/lsp-merge$
-
+```
 
 33 minutes vs. 24 seconds
 
